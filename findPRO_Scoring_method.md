@@ -29,33 +29,33 @@
 ### 3.3 指標定義（Per-Query → Aggregate）
 對第 $i$ 題，系統輸出前 $K$ 名 $P_i@K$，已知委員集合為 $G_i$：
 
-- **命中數**：  
-  $$
-  h_i(K) = |P_i@K \cap G_i|
-  $$
+**命中數**：
+$$
+h_i(K) = |P_i@K \cap G_i|
+$$
 
-- **Precision@K**：  
-  $$
-  \text{Precision@K}_i = \frac{h_i(K)}{K}
-  $$
+**Precision@K**：
+$$
+\text{Precision@K}_i = \frac{h_i(K)}{K}
+$$
 
-- **Recall@K**：  
-  $$
-  \text{Recall@K}_i = \frac{h_i(K)}{|G_i|}
-  $$
-  （若 $|G_i|=0$，此題目不納入平均，另行統計）
+**Recall@K**：
+$$
+\text{Recall@K}_i = \frac{h_i(K)}{|G_i|}
+$$
+（若 $|G_i|=0$，此題目不納入平均，另行統計）
 
-- **HitRate@K**：  
-  $$
-  \text{HitRate@K}_i = \mathbf{1}\{h_i(K) > 0\}
-  $$
+**HitRate@K**：
+$$
+\text{HitRate@K}_i = \mathbf{1}\{h_i(K) > 0\}
+$$
 
-- **NDCG@K**：可採二元或分級相關性定義，依 ground truth 標註設計。
+**NDCG@K**：可採二元或分級相關性定義，依 ground truth 標註設計。
 
-- **第一命中排名 $K^{(hit)}_i$**：  
-  $$
-  K^{(hit)}_i = \min\{k: h_i(k) > 0\}, \quad \text{若無命中則記為 } \infty
-  $$
+**第一命中排名 $K^{(hit)}_i$**：
+$$
+K^{(hit)}_i = \min\{k: h_i(k) > 0\}, \quad \text{若無命中則記為 } \infty
+$$
 
 ---
 
