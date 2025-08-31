@@ -27,37 +27,35 @@
 ---
 
 ### 3.3 指標定義（Per-Query → Aggregate）
-
-對第 \(i\) 題，系統輸出前 \(K\) 名 \(P_i@K\)，已知委員集合為 \(G_i\)：
+對第 $i$ 題，系統輸出前 $K$ 名 $P_i@K$，已知委員集合為 $G_i$：
 
 - **命中數**：  
-  \[
+  $$
   h_i(K) = |P_i@K \cap G_i|
-  \]
+  $$
 
-- **Precision@K**：
+- **Precision@K**：  
   $$
   \text{Precision@K}_i = \frac{h_i(K)}{K}
   $$
 
-- **Recall@K**：
+- **Recall@K**：  
   $$
   \text{Recall@K}_i = \frac{h_i(K)}{|G_i|}
   $$
   （若 $|G_i|=0$，此題目不納入平均，另行統計）
 
-
 - **HitRate@K**：  
-  \[
+  $$
   \text{HitRate@K}_i = \mathbf{1}\{h_i(K) > 0\}
-  \]
+  $$
 
 - **NDCG@K**：可採二元或分級相關性定義，依 ground truth 標註設計。
 
-- **第一命中排名 \(K^{(hit)}_i\)**：  
-  \[
+- **第一命中排名 $K^{(hit)}_i$**：  
+  $$
   K^{(hit)}_i = \min\{k: h_i(k) > 0\}, \quad \text{若無命中則記為 } \infty
-  \]
+  $$
 
 ---
 
@@ -65,11 +63,12 @@
 
 對所有題目的 per-query 指標取平均；同時計算 **Success@K**：
 
-\[
+$$
 \text{Success@K} = \frac{1}{N}\sum_{i=1}^{N} \mathbf{1}\{K^{(hit)}_i \le K\}
-\]
+$$
 
-並統計 \(K^{(hit)}\) 的 **median / p90**，做為 Top-K 決策依據。
+並統計 $K^{(hit)}$ 的 **median / p90**，做為 Top-K 決策依據。
+
 
 
 ---
