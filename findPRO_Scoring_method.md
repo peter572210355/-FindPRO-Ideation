@@ -35,16 +35,17 @@
   h_i(K) = |P_i@K \cap G_i|
   \]
 
-- **Precision@K**：  
-  \[
+- **Precision@K**：
+  $$
   \text{Precision@K}_i = \frac{h_i(K)}{K}
-  \]
+  $$
 
-- **Recall@K**：  
-  \[
+- **Recall@K**：
+  $$
   \text{Recall@K}_i = \frac{h_i(K)}{|G_i|}
-  \]
-  （若 \(|G_i|=0\)，此題目不納入平均，另行統計）
+  $$
+  （若 $|G_i|=0$，此題目不納入平均，另行統計）
+
 
 - **HitRate@K**：  
   \[
