@@ -42,13 +42,6 @@ NDCG@K：可採二元或分級相關性定義，依 ground truth 標註設計。
 第一命中排名： $K^{(hit)}_i = \min\{k: h_i(k) > 0\}, \quad \text{若無命中則記為 } \infty$
 
 
-**NDCG@K**：可採二元或分級相關性定義，依 ground truth 標註設計。
-
-**第一命中排名 $K^{(hit)}_i$**：
-$$
-K^{(hit)}_i = \min\{k: h_i(k) > 0\}, \quad \text{若無命中則記為 } \infty
-$$
-
 ---
 
 #### 整體彙總（宏平均）
