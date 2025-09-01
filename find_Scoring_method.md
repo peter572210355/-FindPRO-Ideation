@@ -244,7 +244,7 @@ Khit_p90    = mean(q90_Khit); Khit_p90_CI    = percentile(q90_Khit,  [2.5,97.5])
 - Acceptance Rate Proxy（模擬轉化率）
 
 
-### 為什麼需要？
+### Acceptance Rate Proxy（模擬轉化率）？
 在本專案中，歷史資料的委員名單通常只包含 **5 位 Ground Truth**。  
 但實際上，這並不代表只有這 5 人適合；其他人也可能是合格的審查委員。  
 如果我們只用 Recall@K 或 Precision@K，當正確委員落在 Top-30（而不是 Top-5）時，系統就會被算「失敗」，這樣會 **低估演算法的真實價值**。
