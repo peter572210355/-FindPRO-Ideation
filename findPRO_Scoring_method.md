@@ -56,6 +56,7 @@ HitRate@K： $\text{HitRate@K}_i = \mathbf{I}(\{h_i(K) > 0\})$
 
 NDCG@K：可採二元或分級相關性定義，依 ground truth 標註設計。
 （可參考：https://yehjames.medium.com/python推薦系統-常見-線下-排序評估指標-90876d70a01）
+
 Success@K 曲線：  
   $\text{Success@K} = \frac{1}{N}\sum_{i=1}^N \mathbf{I}（K^{(hit)}_i \le K)$  
   👉 白話：在所有題目裡，有多少比例能在前 $K$ 名內找到至少一個正確委員。這條曲線能幫助決定系統要顯示前幾名，才能涵蓋大部分正確答案。
