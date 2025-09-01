@@ -170,121 +170,46 @@ FOR K in K_grid:
   Recall_CI[K]   = percentile(mu_recall[:,K], [2.5, 97.5])
   # NDCG/HitRate/Success 同理
 Khit_median = mean(q50_Khit); Khit_median_CI = percentile(q50_Khit, [2.5,97.5])
-Khit_p90    = mean(q90_Khit); Khit_p90_CI    = percentile(q90_Khit,  [2.5,97.5])
+Khit_p90    = mean(q90_Khit); Khit_p90_CI    = percentile(q90_Khit,  [2.5,97.5])'''
 
-
-
-## 四、專業版評估流程（多描述 × Bootstrap × Top-K）
-
-### 4.1 目的
-- **量平均表現**：用固定的 Top-K 指標（Precision@K / Recall@K / HitRate@K / NDCG@K）衡量排序品質。  
-- **量不確定性**：對題目集合做 **Bootstrap**，給出 95% 信賴區間（CI），而不是只報單一數字。  
-- **量穩健性**：同一題目會有多個描述/關鍵字版本；內層隨機抽描述後取平均，檢驗系統對描述寫法的敏感度。  
-- **支援決策**：利用第一命中排名 $K^{(hit)}$ 與 **Success@K 曲線**，幫助決定 UI 要顯示幾名候選人、候選池要多寬。  
 
 ---
-
-### 4.2 輸入與資料準備
-- **測試題目集**：`qid, title, (optional) abstract/desc, keywords, year, field, gt_reviewers[]`
-- **描述池（每題）**：從 *title*、*摘要精簡句*、*官方/作者關鍵字*、*關鍵字擴寫* 產生，每題約 `m ≈ 10–30` 條。  
-- **時間切分**：候選人索引僅用 cutoff 之前資料，測試題目用 cutoff 之後資料（避免洩漏）。  
-- **姓名對齊 / COI**：處理同名異寫（姓名×機構×領域），可選擇有/無 COI 過濾各算一份。  
-
----
-
-### 4.3 指標定義（Per-Query → Aggregate）
-
-對第 $i$ 題，系統輸出前 $K$ 名 $P_i@K$，已知委員集合為 $G_i$：
-
-- **命中數**  
-  $$
-  h_i(K) = |P_i@K \cap G_i|
-  $$
-
-- **Precision@K**  
-  $$
-  \text{Precision@K}_i = \frac{h_i(K)}{K}
-  $$
-
-- **Recall@K**  
-  $$
-  \text{Recall@K}_i = \frac{h_i(K)}{|G_i|}
-  $$
-  若 $|G_i|=0$，此題不納入平均，另行統計。
-
-- **HitRate@K**  
-  $$
-  \text{HitRate@K}_i = \mathbf{1}\{h_i(K) > 0\}
-  $$
-
-- **NDCG@K**  
-  可採二元或分級相關性定義，依 ground truth 標註設計。
-
-- **第一命中排名 $K^{(hit)}_i$**  
-  $$
-  K^{(hit)}_i = \min\{k: h_i(k) > 0\}, \quad \text{若無命中則記為 } \infty
-  $$
-
-**整體彙總（宏平均）**  
-對所有題目的 per-query 指標取平均；同時計算 **Success@K**：
-$$
-\text{Success@K} = \frac{1}{N}\sum_{i=1}^{N} \mathbf{1}\{K^{(hit)}_i \le K\}
-$$
-並統計 $K^{(hit)}$ 的 **median / p90**，做為 Top-K 決策依據。
-
----
-
-### 4.4 K 網格（K-grid）
-一次同時計算多個 K 值，例如 `K = {10, 20, 30, 50}`。  
-每個 K 都提供 **均值 ± 95% CI**，並繪製 **Success@K 曲線**。  
-
----
-
-### 4.5 雙層 Bootstrap 設計
-
-- **內層：描述層穩健平均**  
-  - 每題從描述池 `DescPool_i` 有放回抽取 $r$ 個描述。  
-  - 每個描述各自檢索 → 算 per-query 指標 → 取平均。  
-  - 得到該題在本次抽樣的穩健分數。
-
-- **外層：題目層 Bootstrap**  
-  - 測試集有 $N$ 題；每次有放回抽樣 $N$ 題形成一批。  
-  - 在這批題目上，計算每個 K 的宏平均指標。  
-  - 重複 $B=500\sim1000$ 次，得到分布 → 取 95% CI。  
-  - 同時計算 $K^{(hit)}$ 的 median / p90 ± CI。
-
----
-
-### 4.6 評估流程步驟
-1. **設定**  
-   - $K = \{10, 20, 30, 50\}$  
-   - 內層 $r = 5\sim10$；外層 $B = 500\sim1000$  
-
-2. **預先快取**  
-   - 每個（題目 × 描述）先算檢索結果與 per-query 指標。  
-   - Bootstrap 階段只需做抽樣與平均 → 加速。  
-
-3. **外層迴圈**  
-   - 每次抽 $N$ 題；對每題再抽 $r$ 描述並取平均。  
-   - 計算 Precision/Recall/HitRate/NDCG/Success@K。  
-   - 記錄 $K^{(hit)}$ 的 median / p90。  
-
-4. **匯總**  
-   - 報告各 K 的 **均值 ± 95% CI**。  
-   - 報告 $K^{(hit)}$ 的 median / p90 ± CI。  
-   - 畫 **Success@K 曲線**與各指標折線圖。  
-
----
-
 ### 4.7 產出
-- **表格**：Precision@K, Recall@K, NDCG@K, HitRate@K, Success@K（均值 ± CI）  
-- **圖表**：Success@K 曲線（帶 CI）、各指標 vs K 折線圖  
-- **診斷**：候選池覆蓋率 vs Top-K 命中率  
 
----
+**(A) 指標彙總表（Overall）**
+- 針對每個 K（如 5/10/20/30/50），回報下列指標的「平均值 ± 95% CI」：
+  - Precision@K、Recall@K、HitRate@K、NDCG@K、Success@K
+- 另回報：$K^{(hit)}$ 的 **median / p90 ± 95% CI**
 
-### 4.8 總結價值
-- **更準確**：不只算平均，還有信賴區間。  
-- **更穩健**：多描述隨機檢驗，避免因表述差異導致評估偏差。  
-- **更實用**：$K^{(hit)}$ median / p90 + Success@K 曲線 → 幫助設定系統的預設顯示長度。  
-- **可擴充**：支援基線 vs 新模型比較，做顯著性檢驗。  
+**(B) 分領域表（Per-Subject）**
+- 各 subject（學科/領域）分別產出與 (A) 同樣欄位，便於檢查偏科與泛化能力。
+- 可附加「領域樣本數」與「權重占比」。
+
+**(C) 圖形化結果**
+- Success@K 曲線（含 95% CI 帶）：觀察 K 由小到大覆蓋率如何提升。
+- 指標 vs K 折線圖（Precision/Recall/NDCG/HitRate，各自一條，含 CI）。
+- $K^{(hit)}$ 分布圖（直方圖或 CDF）：觀察「第一次命中」通常落在哪個順位。
+
+**(D) 覆蓋拆解（召回 vs 排序）**
+- 候選池覆蓋率（粗召回是否把正解抓進來）。
+- Top-K 命中率 / Success@K（排序是否把正解排到前面）。
+- 目的：定位效能瓶頸是「召回不足」或「排序不佳」。
+
+**(E) 可信度與可重現性**
+- 報告 Bootstrap 參數：B 次數、亂數種子、K-grid、是否分層抽樣。
+- 附上「平均、標準差、95% CI」三者，避免只報單一數字。
+- 註明資料切分與時間切點（避免洩漏）。
+
+**(F) 錯誤/案例分析（精簡版）**
+- Top-K 失敗案例（如 Success@30=0 的題目）：列出題目、預期委員、模型前 K 結果（遮掩敏感資訊）。
+- 常見失敗型態：同名歧義、冷門領域字彙、描述過短/過長等。
+
+**(G) 決策建議**
+- 依 $K^{(hit)}$ 的 **median / p90**，建議：
+  - 介面預設顯示前 K（例：若 p90=40 → 預設顯示 40）。
+  - 召回池寬度（例：至少召回 300，排序到前 50 供人工瀏覽）。
+- 若某些 subject 顯著偏低，提出下一步改善（詞庫擴張、RRF 權重調整、召回擴寬等）。
+
+
+
+
