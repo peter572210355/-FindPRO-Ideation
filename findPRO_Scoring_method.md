@@ -35,7 +35,7 @@ Precision@K： $\text{Precision@K}_i = \frac{h_i(K)}{K}$
 
 👉 白話：推薦的 $K$ 個人中，有多少比例是正確的。
 
-HitRate@K： $\text{HitRate@K}_i = \mathbf{I}\{\{h_i(K) > 0\\}}$
+HitRate@K： $\text{HitRate@K}_i = \mathbf{I}(\{h_i(K) > 0\})$
 
 👉 白話：只要前 $K$ 人裡有至少 1 個正確的，就算成功（值=1；否則失敗（值=0）
 
