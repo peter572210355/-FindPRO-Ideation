@@ -148,13 +148,7 @@ $$
 
 ---
 
-### 3.10 參數建議與早停
-- `K_grid = [10, 20, 30, 50]`  
-- `B = 1000`（預檢 300–500）  
-- 雙層時：每題描述池 `m = 10–30`、內層每次抽 `r = 5–10`  
-- **早停**：若核心指標（如 Recall@30）之 95% CI 寬度 < 0.02 且最近 200 次變化 < 0.005，即可停止。
 
----
 
 ### 3.11 極簡偽代碼（外層 Bootstrap）
 
@@ -163,7 +157,6 @@ INPUT: N queries, per_query metrics prec/recall/hitrate/ndcg at each K, K_grid, 
 FOR b in 1..B:
   idx = sample_with_replacement(1..N, N)
   FOR K in K_grid:
-    mu_recall[b,K]  = mean(recall[i,K]  for i in idx if defined)
     mu_ndcg[b,K]    = mean(ndcg[i,K]    for i in idx if defined)
     mu_hitrate[b,K] = mean(hitrate[i,K] for i in idx)
     mu_success[b,K] = mean( 1{K_hit[i] ≤ K} for i in idx )
