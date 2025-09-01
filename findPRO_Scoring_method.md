@@ -84,13 +84,14 @@ $P_i@5 = \{C, D, A, E, F\}$
 ### 3.5 Bootstrap（題目層，外層）
 **目的**：反映「如果題目集合不同，整體平均指標會怎麼變」，進而給 **CI**。
 
+（可參考: https://zhuanlan.zhihu.com/p/690904510）
+
 **步驟**
 1. 設定 `B`（例如 1000）與亂數種子；令測試題目數為 `N`。
 2. **預先快取** 每題在各 K 的 per-query 指標（加速）。
 3. 進入迴圈 `b = 1..B`：
    - 從題目索引 `1..N` **有放回地抽樣 N 次**，得到 `idx_b`。
    - 對每個 `K ∈ K_grid`，在 `idx_b` 上取該指標的宏平均：
-     - `mu_recall[b,K]  = mean(recall[i,K]  for i in idx_b)`
      - `mu_ndcg[b,K]    = mean(ndcg[i,K]    for i in idx_b)`
      - `mu_hitrate[b,K] = mean(hitrate[i,K] for i in idx_b)`
      - `mu_success[b,K] = mean(1{K_hit[i] ≤ K} for i in idx_b)`
