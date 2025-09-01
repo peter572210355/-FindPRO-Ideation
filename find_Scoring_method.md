@@ -53,8 +53,7 @@ HitRate@K： $\mathbf{I}(\{h_i(K) > 0\})$
 
 👉 白話：只要前 $K$ 人裡有至少 1 個正確的，就算成功（值=1；否則失敗（值=0）
 
-MAP（Mean Average Precision）：  
-$\frac{1}{N}\sum_{i=1}^N \text{AP}_i$  
+MAP（Mean Average Precision）： $\frac{1}{N}\sum_{i=1}^N \text{AP}_i$  
 其中 $\text{AP}_i$ = 針對題目 $i$ 的 **平均精確度 (Average Precision)**，只在「命中位置」計算 Precision 再取平均。  
 👉 白話：MAP 不只檢查有沒有命中，還會考慮「正確答案排得多前面」，越早出現貢獻越大。
 
