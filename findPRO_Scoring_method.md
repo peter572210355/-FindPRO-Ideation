@@ -29,14 +29,19 @@
 
 命中數： $h_i(K) = |P_i@K \cap G_i|$
 
+👉 白話：推薦的前 $K$ 人裡，有多少人真的在正確名單中。
+
 Precision@K： $\text{Precision@K}_i = \frac{h_i(K)}{K}$
 
+👉 白話：推薦的 $K$ 個人中，有多少比例是正確的。
+
 HitRate@K： $\text{HitRate@K}_i = \mathbf{1}\{h_i(K) > 0\}$
+
+👉 白話：只要前 $K$ 人裡有至少 1 個正確的，就算成功（值=1
 
 NDCG@K：可採二元或分級相關性定義，依 ground truth 標註設計。
 （可參考：https://yehjames.medium.com/python推薦系統-常見-線下-排序評估指標-90876d70a01）
 
-第一命中排名： $K^{(hit)}_i = \min\{k: h_i(k) > 0\}, \quad \text{若無命中則記為 } \infty$
 #### 📌 簡單範例
 假設一個題目的正確委員集合是：  
 $G_i = \{A, B\}$
@@ -48,7 +53,6 @@ $P_i@5 = \{C, D, A, E, F\}$
 - 命中數：$h_i(5) = 1$（因為 A 被命中）
 - Precision@5 = $1/5 = 0.2$
 - HitRate@5 = 1（有命中至少一個）
-- 第一命中排名 = 3（因為第 3 個推薦才命中 A）
 - NDCG@5：因為 A 在第 3 位，得分比放在第 1 位要低，但比放在第 5 位高。
 
 ---
