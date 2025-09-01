@@ -34,6 +34,7 @@ Precision@K： $\text{Precision@K}_i = \frac{h_i(K)}{K}$
 HitRate@K： $\text{HitRate@K}_i = \mathbf{1}\{h_i(K) > 0\}$
 
 NDCG@K：可採二元或分級相關性定義，依 ground truth 標註設計。
+（可參考：https://yehjames.medium.com/python推薦系統-常見-線下-排序評估指標-90876d70a01）
 
 第一命中排名： $K^{(hit)}_i = \min\{k: h_i(k) > 0\}, \quad \text{若無命中則記為 } \infty$
 #### 📌 簡單範例
