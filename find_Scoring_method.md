@@ -60,7 +60,7 @@ $\text{MAP} = \frac{1}{N}\sum_{i=1}^N \text{AP}_i$
 
 
 NDCG@K：可採二元或分級相關性定義，依 ground truth 標註設計。
-（可參考：https://yehjames.medium.com/python推薦系統-常見-線下-排序評估指標-90876d70a01）
+（可參考：https://yehjames.medium.com/python推薦系統-常見-線下-排序評估指標-90876d70a01 /）
 
 Success@K 曲線：  
   $\text{Success@K} = \frac{1}{N}\sum_{i=1}^N \mathbf{I}（K^{(hit)}_i \le K)$  
@@ -96,7 +96,7 @@ $P_i@5 = \{C, D, A, E, B\}$
 它的好處是 **不用額外數學假設（例如常態分布）**，只要有電腦就能跑。
 **目的**：反映「如果題目集合不同，整體平均指標會怎麼變」，進而給 **CI**。
 
-（可參考: https://zhuanlan.zhihu.com/p/690904510）
+（可參考: https://zhuanlan.zhihu.com/p/690904510 /）
 
 **步驟**
 1. 設定 Bootstrap 次數為`B`與亂數種子；令測試題目數為 `N`。
