@@ -45,16 +45,16 @@
 
 👉 白話：推薦的前 $K$ 人裡，有多少人真的在正確名單中。
 
-Precision@K： $\text{Precision@K}_i = \frac{h_i(K)}{K}$
+Precision@K： $\frac{h_i(K)}{K}$
 
 👉 白話：推薦的 $K$ 個人中，有多少比例是正確的。
 
-HitRate@K： $\text{HitRate@K}_i = \mathbf{I}(\{h_i(K) > 0\})$
+HitRate@K： $\mathbf{I}(\{h_i(K) > 0\})$
 
 👉 白話：只要前 $K$ 人裡有至少 1 個正確的，就算成功（值=1；否則失敗（值=0）
 
 MAP（Mean Average Precision）：  
-$\text{MAP} = \frac{1}{N}\sum_{i=1}^N \text{AP}_i$  
+$\frac{1}{N}\sum_{i=1}^N \text{AP}_i$  
 其中 $\text{AP}_i$ = 針對題目 $i$ 的 **平均精確度 (Average Precision)**，只在「命中位置」計算 Precision 再取平均。  
 👉 白話：MAP 不只檢查有沒有命中，還會考慮「正確答案排得多前面」，越早出現貢獻越大。
 
@@ -63,7 +63,7 @@ NDCG@K：可採二元或分級相關性定義，依 ground truth 標註設計。
 （可參考：https://yehjames.medium.com/python推薦系統-常見-線下-排序評估指標-90876d70a01 /）
 
 Success@K 曲線：  
-  $\text{Success@K} = \frac{1}{N}\sum_{i=1}^N \mathbf{I}（K^{(hit)}_i \le K)$  
+  $\frac{1}{N}\sum_{i=1}^N \mathbf{I}（K^{(hit)}_i \le K)$  
   👉 白話：在所有題目裡，有多少比例能在前 $K$ 名內找到至少一個正確委員。這條曲線能幫助決定系統要顯示前幾名，才能涵蓋大部分正確答案。
 
 
