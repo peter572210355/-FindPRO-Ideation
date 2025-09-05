@@ -1,0 +1,57 @@
+好問題 👍
+A/B 測試不只是看「哪一組 CTR 比較高」，其實可以從 四大面向（效果、使用者行為、體驗、統計檢定）去定義指標。以下整理成清單給你：
+
+⸻
+
+🔹 1. 效果指標（Effectiveness Metrics）
+
+衡量推薦系統「有沒有更好」
+	•	CTR (Click-Through Rate)：曝光 → 點擊
+	•	Add-to-Cart Rate：曝光 → 加入購物車
+	•	Adoption / Conversion Rate：曝光 → 採納 / 成功提交
+	•	Average Adopted Rank：被採納候選人平均名次
+	•	NDCG@K、Precision@K、Recall@K：排名品質
+	•	Exploration Yield：探索候選人被成功採納的比例（若有探索流量）
+
+⸻
+
+🔹 2. 使用者行為指標（Behavior Metrics）
+
+觀察用戶互動習慣的差異
+	•	Session Length：單次使用的互動次數
+	•	Cart Size：購物車平均大小
+	•	Remove Rate：加進購物車後又移除的比例
+	•	Skip Rate：完全沒互動的比例
+	•	Scroll Depth / Page-wise CTR：是否只看前幾名/前幾頁
+
+⸻
+
+🔹 3. 體驗與延伸指標（Experience Metrics）
+
+衡量用戶體驗與系統策略價值
+	•	Time-to-First-Click：看到推薦到第一次點擊的時間
+	•	Time-to-Adopt：完成提交的時間
+	•	Diversity / Novelty：名單是否更分散或更新鮮
+	•	Satisfaction Proxy：例如「解釋顯示」組 vs 無解釋組 的採納率差異
+
+⸻
+
+🔹 4. 統計檢定與穩健性（Statistical Significance & Robustness）
+
+確保差異不是隨機噪音
+	•	差異顯著性檢定
+	•	t-test / z-test（CTR、轉換率）
+	•	卡方檢定（分類行為分布差異）
+	•	效果量 (Effect Size)
+	•	相對提升率 (Relative Lift)：(B - A)/A
+	•	Cohen’s d（平均差異效應大小）
+	•	可信區間 (Confidence Interval)：例如 CTR 提升的 95% CI
+	•	功效分析 (Power Analysis)：樣本量是否足以檢測效果
+
+⸻
+
+🔹 總結
+	•	短期核心 KPI：CTR、Adoption Rate、Average Rank
+	•	中期行為分析：Cart Size、Remove Rate、Skip Rate
+	•	長期體驗價值：Diversity、Novelty、Time-to-Adopt
+	•	統計驗證：顯著性檢定 + 效果量 + 可信區間
